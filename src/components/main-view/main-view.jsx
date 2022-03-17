@@ -6,7 +6,7 @@ import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
-export class MainView extends React.Component {
+export default class MainView extends React.Component {
 
   constructor() {
     super();
