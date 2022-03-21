@@ -1,5 +1,11 @@
-$color: steelblue;
+$backgroundColor: #1e1c36;
+$textColor: #ffffff;
 
-.my-flix {
-  color: $color;
+* {
+  background-color: $backgroundColor;
+  color: $textColor;
+}
+
+#main-view {
+  margin-top: 100px;
 }
