@@ -1,4 +1,33 @@
-.my-flix {
-  color: steelblue;
+* {
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+
+#main-view {
+  margin-top: 100px;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
+  color: #ffffff;
 }
 /*# sourceMappingURL=index.caa67093.css.map */
