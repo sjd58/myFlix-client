@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import PropTypes, { number } from 'prop-types';
-import {Form, Button, Card, CardGroup, Container, Col, Row, NavLink } from 'react-bootstrap';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import {Form, Button, Card, CardGroup, Container, Col, Row, Nav } from 'react-bootstrap';
 
 export function RegistrationView(props) {
   const [ username, setUsername ] = useState('');
@@ -57,7 +58,7 @@ const validate = () => {
       .then(response => {
         const data = response.data;
         console.log(data);
-        alert('Registrations uccessful, please login');
+        alert('Registration successful, please login');
         window.open('/', '_self');
       })
       .catch(response => {
@@ -66,10 +67,6 @@ const validate = () => {
       });
     }
   };
-
-//double check redirect code after successful login
-
-//Add button to redirect to the login page
 
   return (
     <Container id="registration-form">
@@ -135,6 +132,9 @@ const validate = () => {
                       Register
                   </Button>
                 <Card.Text>Already Registered?</Card.Text>
+                <Nav id="nav" className ="me-auto">
+                  <Nav.Link id="nav-link" href ="/login">Click here to login</Nav.Link>
+                </Nav>
                 </Form>
               </Card.Body>
             </Card>
