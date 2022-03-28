@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Card, CardGroup, Container, Col, Row } from 'react-bootstrap';
+import { Form, Button, Card, CardGroup, Container, Col, Row, Nav } from 'react-bootstrap';
 import axios from 'axios';
 import './login-view.scss';
 
@@ -74,6 +74,9 @@ const validate = () => {
                   </Button>
                 </Form>
                 <Card.Text>Not registered yet?</Card.Text>
+                <Nav id="nav" className ="me-auto">
+                  <Nav.Link id="nav-link" href ="/register">Click here to register</Nav.Link>
+                </Nav>
               </Card.Body>
             </Card>
           </CardGroup>
