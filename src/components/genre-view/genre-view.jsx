@@ -1,7 +1,6 @@
 import React from 'react';
-import { Container, Row, Col, Card, Button, CardGroup} from 'react-bootstrap';
+import { Row, Col, Card, Button, CardGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 import './genre-view.scss';
 
 export class GenreView extends React.Component {
@@ -10,9 +9,8 @@ export class GenreView extends React.Component {
     const { genre, movies, onBackClick } = this.props;
 
     return (
-      <Container>
-        <Row>
-          <Col>
+      <Row>
+        <Col>
           <Card id="director-view">
             <Card.Body>
               <Card.Title>{genre.Name}</Card.Title>
@@ -20,9 +18,12 @@ export class GenreView extends React.Component {
               <Button id="genre-back-button" onClick={() => {onBackClick();}}>Back</Button>
             </Card.Body>
           </Card>
-          </Col>
-        </Row>
-      </Container>
+        </Col>
+      </Row>
     )
   }
+}
+
+GenreView.propTypes = {
+  
 }
