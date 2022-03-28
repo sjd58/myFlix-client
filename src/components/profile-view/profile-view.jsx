@@ -35,7 +35,7 @@ export class ProfileView extends React.Component {
   getUser(token) {
     const Username = localStorage.getItem('user');
 
-    axios.get(`https://myflixapi-by-sjd58.herokuapp.com/users/${username}`, {
+    axios.get(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, {
       headers: { Authorization:`Bearer ${token}`}
     })
     .then(response => {
@@ -57,15 +57,15 @@ export class ProfileView extends React.Component {
     const Username = localStorage.getItem('user');
     const token = localStorage .getItem('token');
 
-    axios.put(`https://myflixapi-by-sjd58.herokuapp.com/users${Username}`, 
+    axios.put(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, 
     {
       Username: this.state.Username,
       Password: this.state.Password,
       Email: this.state.Email,
-      Birthday: this.state.Birthday
+      Birthday: this.state.Birthday,
     },
     {
-      header: { Authorization: `Bearer ${token}`}
+      headers: { Authorization: `Bearer ${token}`}
     }
   )
   .then((response) => {
@@ -76,18 +76,19 @@ export class ProfileView extends React.Component {
       Birthday: response.data.Birthday
     });
 
-    localStorage.setItem('user', this.state.Uername);
+    localStorage.setItem('user', this.state.Username);
     alert("Profile Updated")
     window.open('/profile,', '_self');
     });
-  }
 
-  onRemoveFavorite = (e, movies) => {
+  };
+
+  onRemoveFavorite = (e, movie) => {
     e.preventDefault();
     const Username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
-    axios.delete(`https://myflixapi-by-sjd58.herokuapp.com/users${Username}/movies/${movie._id}`,
+    axios.delete(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}/movies/${movie._id}`,
       {
         headers: { Authorization: `Bearer ${token}` }
       }
@@ -106,7 +107,7 @@ export class ProfileView extends React.Component {
     const Username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
-    axios.delete(`https://myflixapi-by-sjd58.herokuapp.com/users${Username}`,
+    axios.delete(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`,
       {
         headers: { Authorization: `Bearer ${token}` }
       }
@@ -119,6 +120,7 @@ export class ProfileView extends React.Component {
     })
     .catch(function (error) {
       console.log(error);
+      alert("Delete unsuccessful")
     });
   }
 
@@ -153,8 +155,7 @@ export class ProfileView extends React.Component {
           <Col>
             <Card>
               <Card.Body>
-                <Card.Title>Profile</Card.Title>
-
+                <Card.Title>Update your profile information below:</Card.Title>
                 <Form 
                   className="update-form"
                   onSubmit={(e) =>
@@ -173,8 +174,7 @@ export class ProfileView extends React.Component {
                     <FormControl
                       type="text"
                       name="Username"
-                      placeholder="Enter your username"
-                      value={Username}
+                      placeholder="Enter your new username"
                       onChange={(e) => this.setUsername(e.target.value)}
                       required
                     />
@@ -185,8 +185,7 @@ export class ProfileView extends React.Component {
                     <FormControl
                       type="password"
                       name="Password"
-                      placeholder="Enter your password"
-                      value={Password}
+                      placeholder="Enter your new password"
                       onChange={(e) => this.setUsername(e.target.value)}
                       required
                     />
@@ -197,8 +196,7 @@ export class ProfileView extends React.Component {
                     <FormControl
                       type="email"
                       name="Email"
-                      placeholder="Enter your email"
-                      value={Email}
+                      placeholder="Enter your new email"
                       onChange={(e) => this.setBirthday(e.target.value)}
                       required
                     />
@@ -206,6 +204,7 @@ export class ProfileView extends React.Component {
 
                   <div>
                     <Button variant="primary" type="submit" onClick={this.editUser}>Update Data</Button>
+                    <Button variant="primary" onClick={() => { this.onLoggedOut()}}>Logout</Button>
                     <Button variant="danger" onClick={() => this.onDeleteUser()}>DeleteProfile</Button>
                   </div>
 
