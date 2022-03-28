@@ -1,1 +1,9 @@
-/*navbar-view*/
+$backgroundColor: #1e1c36;
+$textColor: #ffffff;
+
+#navbar-container {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: $backgroundColor;
+    color: $textColor;
+}
