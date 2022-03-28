@@ -94,7 +94,6 @@ onLoggedOut() {
 
     return (
       <Router>
-        <Button onClick={() => { this.onLoggedOut()}}>Logout</Button>
         <Row>
           <NavbarView user={user} />
         </Row>
@@ -116,6 +115,12 @@ onLoggedOut() {
               <RegistrationView />
             </Col>
           }} />
+          <Route path="/login" render={() => {
+            if (user) return <Redirect to="/" />
+            return <Col>
+              <LoginView />
+            </Col>
+          }} />
           <Route path="/movies/:movieId" render={({ match, history }) => {
             if (!user) return <Col>
               <LoginView onLoggedIn={(user =>this.onLoggedIn(user))} />
@@ -131,17 +136,23 @@ onLoggedOut() {
             </Col>
             if (movies.length ===0) return <div className="main-view" />;
             return <Col md={8}>
-              <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} />
+              <DirectorView 
+              director={movies.find(m => m.Director.Name === match.params.name).Director}
+              onBackClick={() => history.goBack()}
+              movies={movies.filter(movie => movie.Director.Name === match.params.name)} />
             </Col>
           }
           } />
-          <Route exact path="/genres/:name" render={({ match, history }) => {
+          <Route path="/genres/:name" render={({ match, history }) => {
             if (!user) return <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
             </Col>
             if (movies.length === 0) return <div className="main-view" />;
             return <Col md={8}>
-              <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} onBackClick={() => history.goBack()} />
+              <GenreView 
+                genre={movies.find(m => m.Genre.Name === match.params.name).Genre} 
+                onBackClick={() => history.goBack()} 
+                movies={movies.filter(movie => movie.Genre.Name === match.params.name)} />
             </Col>
           }
           } />
@@ -152,17 +163,6 @@ onLoggedOut() {
               </Col>
               return <Col md={8}>
                 <ProfileView movies={movies} onBackClick={() => history.goBack()} />
-              </Col>
-          }
-          } />
-          <Route path={`/users/${user}`} render={({ history }) => {
-            if (!user)
-              return <Col>
-                <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-              </Col>
-              return <Col md={8}>
-                <ProfileView user={user}
-                onBackClick={() => history.goBack()} />
               </Col>
           }
           } />
