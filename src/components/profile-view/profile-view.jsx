@@ -69,6 +69,7 @@ export class ProfileView extends React.Component {
     }
   )
   .then((response) => {
+    console.log(response);
     this.setState({
       Username: response.data.Username,
       Password: response.data.Password,
@@ -135,6 +136,7 @@ export class ProfileView extends React.Component {
       Password: value
     });
   }
+
   setBirthday(value) {
     this.setState({
       Birthday: value
@@ -156,6 +158,7 @@ export class ProfileView extends React.Component {
             <Card>
               <Card.Body>
                 <Card.Title>Update your profile information below:</Card.Title>
+
                 <Form 
                   className="update-form"
                   onSubmit={(e) =>
@@ -197,77 +200,87 @@ export class ProfileView extends React.Component {
                       type="email"
                       name="Email"
                       placeholder="Enter your new email"
-                      onChange={(e) => this.setBirthday(e.target.value)}
+                      onChange={(e) => this.setEmail(e.target.value)}
                       required
                     />
                   </FormGroup>
 
-                  <div>
-                    <Button variant="primary" type="submit" onClick={this.editUser}>Update Data</Button>
-                    <Button variant="primary" onClick={() => { this.onLoggedOut()}}>Logout</Button>
-                    <Button variant="danger" onClick={() => this.onDeleteUser()}>DeleteProfile</Button>
-                  </div>
-
+                  <FormGroup>
+                    <Form.Label>Birthday</Form.Label>
+                      <FormControl
+                        type="text"
+                        name="Birthday"
+                        placeholder="Enter your new birthday"
+                        onChange={(e) => this.setBirthday(e.target.value)}
+                        required
+                      />
+                  </FormGroup>
                 </Form>
               </Card.Body>
+              <Card.Footer>
+                <Button variant="primary" type="submit" onClick={this.editUser}>Update Data</Button>
+                <Button variant="primary" onClick={() => { this.onLoggedOut()}}>Logout</Button>
+                <Button variant="danger" onClick={() => this.onDeleteUser()}>DeleteProfile</Button>
+              </Card.Footer>
             </Card>
           </Col>
         </Row>
 
         <Row>
           <Col>
-          <Card>
-            <Card.Body>
-              {FavoriteMovies.length === 0 && (
-                <div className="center-text">No favorite movies</div>
-              )}
-              <Row className="favorite-movies-container">
-                {FavoriteMovies.length > 0 && movies.map((movie) => {
-                  if (movie._id === FavoriteMovies.find((fav) => fav === movie._id)
-                  ) {
-                    return (
-                      <Card className="favorite-movie" key={movie._id} >
-                        <Card.Img
-                          className="favorite-movie-image"
-                          variant="top"
-                          src={movie.ImagePath}
-                        />
-                        <Card.Body>
-                          <Card.Title className="movie-title">
-                            {movie.Title}
-                          </Card.Title>
-                          <Button value={movie._id} onClick={(e) => this.onRemoveFavorite(e, movie)}>Remove from list</Button>
-                        </Card.Body>
-                      </Card>
-                    );
-                  }
-                })}
-              </Row>
-            </Card.Body>
-          </Card>
+            <Card>
+              <Card.Body>
+                {FavoriteMovies.length === 0 && (
+                  <div className="center-text">No favorite movies</div>
+                )}
+                <Row className="favorite-movies-container">
+                  {FavoriteMovies.length > 0 && movies.map((movie) => {
+                    if (movie._id === FavoriteMovies.find((fav) => fav === movie._id)
+                    ) {
+                      return (
+                        <Card className="favorite-movie" key={movie._id}>
+                          <Card.Img
+                            className="favorite-movie-image"
+                            variant="top"
+                            src={movie.ImagePath}
+                          />
+                          <Card.Body>
+                            <Card.Title className="movie-title">
+                              {movie.Title}
+                            </Card.Title>
+                            <Button value={movie._id} onClick={(e) => this.onRemoveFavorite(e, movie)}>Remove from list</Button>
+                          </Card.Body>
+                        </Card>
+                      );
+                    }
+                  })}
+                </Row>
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
       </Container>
-    )
+    );
   }
-
 }
 
 ProfileView.propTypes = {
-  movies: PropTypes.arrayOf(PropTypes.shape({
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    ImagePath: PropTypes.string.isRequired,
-    Genre: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      Title: PropTypes.string.isRequired,
       Description: PropTypes.string.isRequired,
-    }).isRequired,
-    Director: PropTypes.shape({
-      Bio: PropTypes.string.isRequired,
-      Birth: PropTypes.string.isRequired,
-      Death: PropTypes.string.isRequired,
-      Name: PropTypes.string.isRequired,
-    }).isRequired,
-  })).isRequired,
+      ImagePath: PropTypes.string.isRequired,
+      Genre: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        Description: PropTypes.string.isRequired,
+      }).isRequired,
+      Director: PropTypes.shape({
+        Bio: PropTypes.string.isRequired,
+        Birth: PropTypes.string.isRequired,
+        Death: PropTypes.string.isRequired,
+        Name: PropTypes.string.isRequired,
+      }).isRequired,
+    })
+    ).isRequired,
   onbackClick: PropTypes.func.isRequired
 }
