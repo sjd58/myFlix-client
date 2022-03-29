@@ -40832,7 +40832,7 @@ class ProfileView extends _reactDefault.default.Component {
             });
             localStorage.setItem('user', this.state.Username);
             alert("Profile Updated");
-            window.open('/profile,', '_self');
+            window.open('/profile', '_self');
         });
     };
     onRemoveFavorite = (e, movie)=>{
@@ -40987,7 +40987,7 @@ class ProfileView extends _reactDefault.default.Component {
                                                             type: "password",
                                                             name: "Password",
                                                             placeholder: "Enter your new password",
-                                                            onChange: (e)=>this.setUsername(e.target.value)
+                                                            onChange: (e)=>this.setPassword(e.target.value)
                                                             ,
                                                             required: true,
                                                             __source: {
