@@ -17,12 +17,12 @@ export class MovieView extends React.Component {
 
     this.getUserDetails = this.getUserDetails.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
-  }
+  };
 
   componentDidMount() {
     const accessToken = localStorage.getItem('token');
     this.getUserDetails(accessToken);
-  }
+  };
   
   getUserDetails() {
     const Username = localStorage.getItem('user');
@@ -43,7 +43,7 @@ export class MovieView extends React.Component {
     }).catch(function(error) {
       console.log(error);
     });
-  }
+  };
 
   addFavorite = (e, movie) => {
     e.preventDefault();
@@ -51,6 +51,7 @@ export class MovieView extends React.Component {
     const token = localStorage.getItem('token');
 
     axios.post(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}/movies/${movie._id}`,
+    {},
       {
         headers: { Authorization: `Bearer ${token}`}
       }
@@ -63,7 +64,7 @@ export class MovieView extends React.Component {
     .catch(function (error) {
       console.log(error);
     });
-  }
+  };
 
   render() {
     const { movie, onBackClick } = this.props;
