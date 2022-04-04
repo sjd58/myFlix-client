@@ -15,15 +15,13 @@ export class GenreView extends React.Component {
             <Card.Body>
               <Card.Title>{genre.Name}</Card.Title>
               <Card.Text>Description: {genre.Description}</Card.Text>
-              <Button id="genre-back-button" onClick={() => {onBackClick();}}>Back</Button>
             </Card.Body>
+            <Card.Footer id="card-footer">
+              <Button id="genre-back-button" onClick={() => {onBackClick();}}>Back</Button>
+            </Card.Footer>
           </Card>
         </Col>
       </Row>
     )
   }
-}
-
-GenreView.propTypes = {
-  
 }
