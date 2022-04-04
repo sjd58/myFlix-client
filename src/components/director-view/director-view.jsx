@@ -17,8 +17,10 @@ export class DirectorView extends React.Component {
             <Card.Text>{director.Bio}</Card.Text>
             <Card.Text>Birth: {director.Birth}</Card.Text>
             <Card.Text>Death: {director.Death}</Card.Text>
-            <Button id="director-back-button" onClick={() => {onBackClick();}}>Back</Button>
           </Card.Body>
+          <Card.Footer id="card-footer">
+            <Button id="director-back-button" onClick={() => {onBackClick();}}>Back</Button>
+          </Card.Footer>
         </Card>
         </Col>
       </Row>
