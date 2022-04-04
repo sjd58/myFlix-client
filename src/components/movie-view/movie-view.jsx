@@ -80,6 +80,7 @@ export class MovieView extends React.Component {
                 <Card.Text id="movie-description" className="movie-description">{movie.Description}</Card.Text>
                 <Card.Text id="movie-director" className="movie-director">Director: {movie.Director.Name}</Card.Text>
                 <Card.Text id="movie-genre" className="movie-genre">Genre: {movie.Genre.Name}</Card.Text>
+                <Card.Text>Click below to learn more:</Card.Text>
                 <Link to={`/directors/${movie.Director.Name}`}>
                   <Button variant="link">Director</Button>
                 </Link>
@@ -87,7 +88,7 @@ export class MovieView extends React.Component {
                   <Button variant="link">Genre</Button>
                 </Link>
               </Card.Body>
-              <Card.Footer>
+              <Card.Footer id="card-footer">
                 <Button id="movie-view-button" onClick={() => { onBackClick(); }}>Back</Button>
                 <Button id="movie-view-button" onClick={(e) => { this.addFavorite(e, movie)}}>Add to favorites</Button>
               </Card.Footer>
