@@ -8,12 +8,6 @@
   background-color: #1e1c36;
   color: #ffffff;
 }
-* {
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
-  background-color: #1e1c36;
-  color: #ffffff;
-}
 
 #card-footer {
   background-color: slategray;
@@ -76,6 +70,12 @@
 
 #nav-link {
   background-color: black;
+  color: #ffffff;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
   color: #ffffff;
 }
 /*# sourceMappingURL=index.caa67093.css.map */
