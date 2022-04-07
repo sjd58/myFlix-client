@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Container, Card, Button, Row, Col, Form, FormGroup, FormControl } from 'react-bootstrap'
 
 import './profile-view.scss';
+import { connect } from 'react-redux';
+import { setMovies, setUser } from '../../actions/actions'
 
 export class ProfileView extends React.Component {
   constructor() {
@@ -81,7 +83,6 @@ export class ProfileView extends React.Component {
     alert("Profile Updated")
     window.open('/profile', '_self');
     });
-
   };
 
   onRemoveFavorite = (e, movie) => {
@@ -90,10 +91,8 @@ export class ProfileView extends React.Component {
     const token = localStorage.getItem('token');
 
     axios.delete(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}/movies/${movie._id}`,
-      {
-        headers: { Authorization: `Bearer ${token}` }
-      }
-    )
+      { headers: { Authorization: `Bearer ${token}` }
+    })
     .then((response) => {
       console.log(response);
       alert("Movie removed");
@@ -102,7 +101,7 @@ export class ProfileView extends React.Component {
     .catch(function (error) {
       console.log(error);
     });
-  }
+  };
 
   onDeleteUser() {
     const Username = localStorage.getItem('user');
@@ -144,7 +143,7 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { movies, onbackClick } = this.props;
+    const { movies } = this.props;
     const { FavoriteMovies, Username, Password, Email, Birthday } = this.state;
 
     if(!Username) {
@@ -282,5 +281,10 @@ ProfileView.propTypes = {
       }).isRequired,
     })
     ).isRequired,
-  onbackClick: PropTypes.func.isRequired
 }
+
+let mapStateToProps = state => {
+  return { user: state.user }
+}
+
+export default connect(mapStateToProps, { setUser }) (ProfileView);
