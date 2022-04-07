@@ -38,7 +38,7 @@ const validate = () => {
     setEmailErr('Please enter a valid email address');
   }
   if(!birthday){
-    setBirthdayErr('Birthday Required');
+    setBirthdayErr('Birthday required in the following format: yyyy/mm/dd');
     isReq = false;
   }
   return isReq;
@@ -121,7 +121,7 @@ const validate = () => {
                       value={birthday}
                       onChange={e => setBirthday(e.target.value)}
                       required
-                      placeholder="Enter your birthday"
+                      placeholder="Enter your birthday: yyyy/mm/dd"
                       />
                       {birthdayErr && <p>{birthdayErr}</p>}
                   </Form.Group>
