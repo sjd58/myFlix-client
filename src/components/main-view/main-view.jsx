@@ -10,14 +10,13 @@ import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { NavbarView } from '../navbar-view/navbar-view';
 import {Col, Row } from "react-bootstrap";
-import "./main-view.scss"
+import "./main-view.scss";
 
-import { setMovies, setUser } from '../../actions/actions'
+import { setMovies, setUser } from '../../actions/actions';
 import { connect } from 'react-redux';
 import MoviesList from '../movies-list/movies-list';
 
 class MainView extends React.Component {
-
   constructor() {
     super();
 // Initial state is set to null
@@ -68,7 +67,6 @@ componentDidMount() {
     this.getMovies(authData.token);
   }
 
-//do I need this chunk of code?
   onRegistration(register) {
     this.setState({
       register
@@ -87,6 +85,7 @@ onLoggedOut() {
   render() {
     let { movies } = this.props;
     let { user } = this.props;
+    console.log(user)
     //if (!register) return <RegistrationView onRegistration={(register) => this.onRegistration(register)} />;
 
     return (
@@ -165,8 +164,8 @@ onLoggedOut() {
   }
 }
 
-let mapStateToProps = state => {
-  return { movies: state.movies, user: state.user }
-}
+let mapStateToProps = (state) => {
+  return { movies: state.movies, user: state.user };
+};
 
 export default connect(mapStateToProps, { setMovies, setUser } ) (MainView);
