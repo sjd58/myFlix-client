@@ -7,11 +7,9 @@ import './login-view.scss';
 export function LoginView(props) {
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
-  // Declare hook for each input
   const [ usernameErr, setUsernameErr ] = useState('');
   const [ passwordErr, setPasswordErr ] = useState('');
 
-// validate user inputs
 const validate = () => {
   let isReq = true;
   if(!username){
@@ -35,7 +33,6 @@ const validate = () => {
     e.preventDefault();
     const isReq = validate();
     if(isReq) {
-      /* Send a request to the server for authentication */
       axios.post('https://myflixapi-by-sjd58.herokuapp.com/login', {
         Username: username,
         Password: password
@@ -85,8 +82,6 @@ const validate = () => {
     </Container>
   );
 }
-
-// Need to set up button to link to registration page
 
 LoginView.propTypes = {
   register: PropTypes.shape({
