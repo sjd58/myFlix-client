@@ -5,7 +5,7 @@ import { Container, Card, Button, Row, Col, Form, FormGroup, FormControl } from 
 
 import './profile-view.scss';
 import { connect } from 'react-redux';
-import { setMovies, setUser } from '../../actions/actions'
+import { setUser } from '../../actions/actions'
 
 export class ProfileView extends React.Component {
   constructor() {
@@ -20,9 +20,21 @@ export class ProfileView extends React.Component {
     };
   }
 
+  //componentDidMount() {
+  //  const accessToken = localStorage.getItem('token');
+  //  this.getUser(accessToken);
+  //}
+
   componentDidMount() {
-    const accessToken = localStorage.getItem('token');
-    this.getUser(accessToken);
+    const { user } = this.props;
+    console.log(this.props);
+    this.setState({
+      Username: user.Username,
+      Password: user.Password,
+      Email: user.Email,
+      Birthday: user.Birthday,
+      FavoriteMovies: user.FavoriteMovies,
+    });
   }
 
   onLoggedOut() {
@@ -263,6 +275,12 @@ export class ProfileView extends React.Component {
   }
 }
 
+let mapStateToProps = (state) => {
+  return { user: state.user }
+}
+
+export default connect(mapStateToProps, { setUser }) (ProfileView);
+
 ProfileView.propTypes = {
   movies: PropTypes.arrayOf(
     PropTypes.shape({
@@ -282,9 +300,3 @@ ProfileView.propTypes = {
     })
     ).isRequired,
 }
-
-let mapStateToProps = state => {
-  return { user: state.user }
-}
-
-export default connect(mapStateToProps, { setUser }) (ProfileView);
