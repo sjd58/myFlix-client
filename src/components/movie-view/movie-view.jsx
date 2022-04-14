@@ -3,11 +3,12 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Card, Col, Row, Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setMovies, setUser } from '../../actions/actions';
 
 import "./movie-view.scss";
 
 export class MovieView extends React.Component {
-
   constructor(props) {
     super(props);
     this.state= {
@@ -15,35 +16,35 @@ export class MovieView extends React.Component {
       userDetails: []
     }
 
-    this.getUserDetails = this.getUserDetails.bind(this);
+    //this.getUserDetails = this.getUserDetails.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
   };
 
-  componentDidMount() {
-    const accessToken = localStorage.getItem('token');
-    this.getUserDetails(accessToken);
-  };
+  //componentDidMount() {
+    //const accessToken = localStorage.getItem('token');
+    //this.getUserDetails(accessToken);
+  //};
   
-  getUserDetails() {
-    const Username = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
-    axios.get(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, 
-    {
-      headers: { Authorization: `Bearer ${token}`}
-    }
-  )
-  .then((response) => {
-    console.log(response.data);
-      this.props.setUser(response.user);
+  //getUserDetails() {
+  //  const Username = localStorage.getItem('user');
+  //  const token = localStorage.getItem('token');
+  //  axios.get(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, 
+  //  {
+  //    headers: { Authorization: `Bearer ${token}`}
+  //  }
+  //)
+  //.then((response) => {
+  //  console.log(response.data);
+  //    this.props.setUser(response.user);
 
-      this.setState({
-        userDetails: response.data,
-        FavoriteMovies: response.data.FavoriteMovies
-      });
-    }).catch(function(error) {
-      console.log(error);
-    });
-  };
+  //    this.setState({
+  //      userDetails: response.data,
+  //      FavoriteMovies: response.data.FavoriteMovies
+  //    });
+  //  }).catch(function(error) {
+  //    console.log(error);
+  //  });
+  //};
 
   addFavorite = (e, movie) => {
     e.preventDefault();
@@ -59,7 +60,7 @@ export class MovieView extends React.Component {
     .then((response) => {
       console.log(response);
       alert("Favorite has been added!");
-      this.componentDidMount();
+      //this.componentDidMount();
     })
     .catch(function (error) {
       console.log(error);
@@ -71,6 +72,7 @@ export class MovieView extends React.Component {
 
     return (
       <Container>
+        {console.log(this.props)}
         <Row>
           <Col>
             <Card id="movie-view">
@@ -99,6 +101,14 @@ export class MovieView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps, {setUser})(MovieView);
 
 MovieView.propTypes = {
   movies: PropTypes.shape({
