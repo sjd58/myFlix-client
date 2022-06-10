@@ -20,12 +20,12 @@ export class ProfileView extends React.Component {
     };
   }
 
-  //componentDidMount() {
-  //  const accessToken = localStorage.getItem('token');
-  //  this.getUser(accessToken);
-  //}
-
   componentDidMount() {
+    const accessToken = localStorage.getItem('token');
+    this.getUser(accessToken);
+  }
+
+  /*componentDidMount() {
     const { user } = this.props;
     console.log(this.props);
     this.setState({
@@ -35,7 +35,7 @@ export class ProfileView extends React.Component {
       Birthday: user.Birthday,
       FavoriteMovies: user.FavoriteMovies,
     });
-  }
+  }*/
 
   onLoggedOut() {
     localStorage.removeItem('token');
@@ -148,6 +148,12 @@ export class ProfileView extends React.Component {
     });
   }
 
+  setEmail(value) {
+    this.setState({
+      Email: value
+    });
+  }
+
   setBirthday(value) {
     this.setState({
       Birthday: value
@@ -156,7 +162,7 @@ export class ProfileView extends React.Component {
 
   render() {
     const { movies } = this.props;
-    const { FavoriteMovies, Username, Password, Email, Birthday } = this.state;
+    const { FavoriteMovies, Username } = this.state;
 
     if(!Username) {
       return null;
@@ -300,3 +306,13 @@ ProfileView.propTypes = {
     })
     ).isRequired,
 }
+
+/*ProfileView.PropTypes = {
+  users: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string,
+    Favorites: PropTypes.array
+  }),
+  movies: PropTypes.array.isRequired
+};*/
