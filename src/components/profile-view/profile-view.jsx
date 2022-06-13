@@ -48,7 +48,6 @@ export class ProfileView extends React.Component {
 
   getUser(token) {
     const Username = localStorage.getItem('user');
-
     axios.get(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, {
       headers: { Authorization:`Bearer ${token}`}
     })
@@ -162,7 +161,7 @@ export class ProfileView extends React.Component {
 
   render() {
     const { movies } = this.props;
-    const { FavoriteMovies, Username } = this.state;
+    const { FavoriteMovies, Username } = this.props;
 
     if(!Username) {
       return null;
@@ -175,7 +174,6 @@ export class ProfileView extends React.Component {
             <Card>
               <Card.Body>
                 <Card.Title>Update your profile information below:</Card.Title>
-
                 <Form 
                   className="update-form"
                   onSubmit={(e) =>
@@ -288,7 +286,7 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps, { setUser }) (ProfileView);
 
 ProfileView.propTypes = {
-  movies: PropTypes.arrayOf(
+  /*movies: PropTypes.arrayOf(
     PropTypes.shape({
       Title: PropTypes.string.isRequired,
       Description: PropTypes.string.isRequired,
@@ -304,10 +302,7 @@ ProfileView.propTypes = {
         Name: PropTypes.string.isRequired,
       }).isRequired,
     })
-    ).isRequired,
-}
-
-/*ProfileView.PropTypes = {
+    ).isRequired,*/
   users: PropTypes.shape({
     Username: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
@@ -315,4 +310,4 @@ ProfileView.propTypes = {
     Favorites: PropTypes.array
   }),
   movies: PropTypes.array.isRequired
-};*/
+};
