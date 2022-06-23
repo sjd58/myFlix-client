@@ -85,7 +85,7 @@ onLoggedOut() {
   render() {
     let { movies } = this.props;
     let { user } = this.props;
-    console.log(user)
+    console.log(this.props)
     
     return (
       <Router>

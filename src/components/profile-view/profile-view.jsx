@@ -10,7 +10,7 @@ import { setUser } from '../../actions/actions'
 export class ProfileView extends React.Component {
   constructor() {
     super();
-
+    console.log(this.props)
     this.state = {
       Username: null,
       Password: null,
@@ -18,6 +18,21 @@ export class ProfileView extends React.Component {
       Birthday: null,
       FavoriteMovies: []
     };
+  }
+
+  //   this.state = {
+  //     Username: this.props.user.Username,
+  //     Password: this.props.user.Password,
+  //     Email: this.props.user.Email,
+  //     Birthday: this.props.user.Birthday,
+  //     FavoriteMovies: this.props.user.FavoriteMovies
+  //   }
+  // }
+
+  componentDidMount() {
+    const accessToken = localStorage.getItem('token');
+    this.getUser(accessToken);
+    console.log(this.props);
   }
 
   onLoggedOut() {
@@ -29,10 +44,29 @@ export class ProfileView extends React.Component {
     window.open('/', '_self');
   }
 
+  getUser(token) {
+    const Username = localStorage.getItem('user');
+    axios.get(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, {
+      headers: { Authorization:`Bearer ${token}`}
+    })
+    .then(response => {
+      this.setState({
+        Username: response.data.Username,
+        Password: response.data.Password,
+        Email: response.data.Email,
+        Birthday: response.data.Birthday,
+        FavoriteMovies: response.data.FavoriteMovies
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   editUser = (e) => {
     e.preventDefault();
     const Username = localStorage.getItem('user');
-    const token = localStorage .getItem('token');
+    const token = localStorage.getItem('token');
 
     axios.put(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, 
     {
@@ -62,8 +96,8 @@ export class ProfileView extends React.Component {
 
   onRemoveFavorite = (e, movie) => {
     e.preventDefault();
-    const Username = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
+    const Username = localStorage.getItem('user'); //const Username = this.props.user.Username;
+    const token = localStorage.getItem('token');  //const token = this.props.user.Password;
 
     axios.delete(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}/movies/${movie._id}`,
       { headers: { Authorization: `Bearer ${token}` }
@@ -124,13 +158,13 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { movies } = this.props;
-    const { FavoriteMovies, Username } = this.state;
-
+    const { movies, user } = this.props;
+    const { FavoriteMovies } = this.state;
+    //console.log(`data from props is: ${this.props}`)
     // if(!Username) {
     //   return null;
     // }
-
+    console.log(`in the render ${this.props}`)
     return (
       <Container>
         <Row>
@@ -247,7 +281,7 @@ let mapStateToProps = (state) => {
   return { user: state.user }
 }
 
-export default connect(mapStateToProps, { setUser }) (ProfileView);
+export default connect(mapStateToProps, { setUser })(ProfileView);
 
 ProfileView.propTypes = {
   movies: PropTypes.arrayOf(
@@ -270,7 +304,7 @@ ProfileView.propTypes = {
   users: PropTypes.shape({
     Username: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
-    Birthday: PropTypes.string,
+    Birthday: PropTypes.string.isRequired,
     Favorites: PropTypes.array
   }),
   movies: PropTypes.array.isRequired
