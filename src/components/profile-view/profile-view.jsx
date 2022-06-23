@@ -20,23 +20,6 @@ export class ProfileView extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const accessToken = localStorage.getItem('token');
-    this.getUser(accessToken);
-  }
-
-  /*componentDidMount() {
-    const { user } = this.props;
-    console.log(this.props);
-    this.setState({
-      Username: user.Username,
-      Password: user.Password,
-      Email: user.Email,
-      Birthday: user.Birthday,
-      FavoriteMovies: user.FavoriteMovies,
-    });
-  }*/
-
   onLoggedOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -44,25 +27,6 @@ export class ProfileView extends React.Component {
       user: null
     });
     window.open('/', '_self');
-  }
-
-  getUser(token) {
-    const Username = localStorage.getItem('user');
-    axios.get(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, {
-      headers: { Authorization:`Bearer ${token}`}
-    })
-    .then(response => {
-      this.setState({
-        Username: response.data.Username,
-        Password: response.data.Password,
-        Email: response.data.Email,
-        Birthday: response.data.Birthday,
-        FavoriteMovies: response.data.FavoriteMovies
-      });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
   }
 
   editUser = (e) => {
@@ -161,11 +125,11 @@ export class ProfileView extends React.Component {
 
   render() {
     const { movies } = this.props;
-    const { FavoriteMovies, Username } = this.props;
+    const { FavoriteMovies, Username } = this.state;
 
-    if(!Username) {
-      return null;
-    }
+    // if(!Username) {
+    //   return null;
+    // }
 
     return (
       <Container>
@@ -286,7 +250,7 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps, { setUser }) (ProfileView);
 
 ProfileView.propTypes = {
-  /*movies: PropTypes.arrayOf(
+  movies: PropTypes.arrayOf(
     PropTypes.shape({
       Title: PropTypes.string.isRequired,
       Description: PropTypes.string.isRequired,
@@ -302,7 +266,7 @@ ProfileView.propTypes = {
         Name: PropTypes.string.isRequired,
       }).isRequired,
     })
-    ).isRequired,*/
+    ).isRequired,
   users: PropTypes.shape({
     Username: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,

@@ -86,8 +86,7 @@ onLoggedOut() {
     let { movies } = this.props;
     let { user } = this.props;
     console.log(user)
-    //if (!register) return <RegistrationView onRegistration={(register) => this.onRegistration(register)} />;
-
+    
     return (
       <Router>
         <Row>
