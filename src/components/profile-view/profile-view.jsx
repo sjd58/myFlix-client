@@ -5,34 +5,19 @@ import { Container, Card, Button, Row, Col, Form, FormGroup, FormControl } from 
 
 import './profile-view.scss';
 import { connect } from 'react-redux';
-import { setUser } from '../../actions/actions'
+import { setUser, setMovies } from '../../actions/actions'
 
-export class ProfileView extends React.Component {
-  constructor() {
-    super();
-    console.log(this.props)
+class ProfileView extends React.Component {
+  constructor(props) {
+    super(props);
+
     this.state = {
-      Username: null,
-      Password: null,
-      Email: null,
-      Birthday: null,
-      FavoriteMovies: []
-    };
-  }
-
-  //   this.state = {
-  //     Username: this.props.user.Username,
-  //     Password: this.props.user.Password,
-  //     Email: this.props.user.Email,
-  //     Birthday: this.props.user.Birthday,
-  //     FavoriteMovies: this.props.user.FavoriteMovies
-  //   }
-  // }
-
-  componentDidMount() {
-    const accessToken = localStorage.getItem('token');
-    this.getUser(accessToken);
-    console.log(this.props);
+      Username: props.user.Username,
+      Password: props.user.Password,
+      Email: props.user.Email,
+      Birthday: props.user.Birthday,
+      FavoriteMovies: props.user.FavoriteMovies
+    }
   }
 
   onLoggedOut() {
@@ -42,25 +27,6 @@ export class ProfileView extends React.Component {
       user: null
     });
     window.open('/', '_self');
-  }
-
-  getUser(token) {
-    const Username = localStorage.getItem('user');
-    axios.get(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, {
-      headers: { Authorization:`Bearer ${token}`}
-    })
-    .then(response => {
-      this.setState({
-        Username: response.data.Username,
-        Password: response.data.Password,
-        Email: response.data.Email,
-        Birthday: response.data.Birthday,
-        FavoriteMovies: response.data.FavoriteMovies
-      });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
   }
 
   editUser = (e) => {
@@ -81,31 +47,41 @@ export class ProfileView extends React.Component {
   )
   .then((response) => {
     console.log(response);
-    this.setState({
+    this.props.setUser({
       Username: response.data.Username,
       Password: response.data.Password,
       Email: response.data.Email,
-      Birthday: response.data.Birthday
+      Birthday: response.data.Birthday,
+      FavoriteMovies: response.data.FavoriteMovies
     });
 
-    localStorage.setItem('user', this.state.Username);
+    localStorage.setItem('user', this.props.user.Username);
     alert("Profile Updated")
-    window.open('/profile', '_self');
+    //window.open('/profile', '_self');
     });
   };
 
   onRemoveFavorite = (e, movie) => {
     e.preventDefault();
-    const Username = localStorage.getItem('user'); //const Username = this.props.user.Username;
-    const token = localStorage.getItem('token');  //const token = this.props.user.Password;
+    console.log('removing from favorites...')
+    const Username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
 
     axios.delete(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}/movies/${movie._id}`,
-      { headers: { Authorization: `Bearer ${token}` }
-    })
+      { 
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    )
     .then((response) => {
       console.log(response);
       alert("Movie removed");
-      this.componentDidMount();
+      this.props.setUser({
+        Username: response.data.Username,
+        Password: response.data.Password,
+        Email: response.data.Password,
+        Birthday: response.data.Birthday,
+        FavoriteMovies: response.data.FavoriteMovies
+      });
     })
     .catch(function (error) {
       console.log(error);
@@ -126,6 +102,7 @@ export class ProfileView extends React.Component {
       alert("Profile Deleted");
       localStorage.removeItem('user');
       localStorage.removeItem('token');
+      this.props.setUser({user: null});
     })
     .catch(function (error) {
       console.log(error);
@@ -160,11 +137,9 @@ export class ProfileView extends React.Component {
   render() {
     const { movies, user } = this.props;
     const { FavoriteMovies } = this.state;
-    //console.log(`data from props is: ${this.props}`)
     // if(!Username) {
     //   return null;
     // }
-    console.log(`in the render ${this.props}`)
     return (
       <Container>
         <Row>
@@ -192,6 +167,7 @@ export class ProfileView extends React.Component {
                       name="Username"
                       placeholder="Enter your new username"
                       onChange={(e) => this.setUsername(e.target.value)}
+                      value = {this.state.Username}
                       required
                     />
                   </FormGroup>
@@ -203,6 +179,7 @@ export class ProfileView extends React.Component {
                       name="Password"
                       placeholder="Enter your new password"
                       onChange={(e) => this.setPassword(e.target.value)}
+                      value = {this.state.Password}
                       required
                     />
                   </FormGroup>
@@ -214,6 +191,7 @@ export class ProfileView extends React.Component {
                       name="Email"
                       placeholder="Enter your new email"
                       onChange={(e) => this.setEmail(e.target.value)}
+                      value = {this.state.Email}
                       required
                     />
                   </FormGroup>
@@ -225,6 +203,7 @@ export class ProfileView extends React.Component {
                         name="Birthday"
                         placeholder="Enter your new birthday"
                         onChange={(e) => this.setBirthday(e.target.value)}
+                        value = {this.state.Birthday}
                         required
                       />
                   </FormGroup>
@@ -278,10 +257,10 @@ export class ProfileView extends React.Component {
 }
 
 let mapStateToProps = (state) => {
-  return { user: state.user }
-}
+  return { movies: state.movies, user: state.user };
+};
 
-export default connect(mapStateToProps, { setUser })(ProfileView);
+export const WrappedProfile = connect(mapStateToProps, { setMovies, setUser } ) (ProfileView);
 
 ProfileView.propTypes = {
   movies: PropTypes.arrayOf(
@@ -301,11 +280,11 @@ ProfileView.propTypes = {
       }).isRequired,
     })
     ).isRequired,
-  users: PropTypes.shape({
+  user: PropTypes.shape({
     Username: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
     Birthday: PropTypes.string.isRequired,
-    Favorites: PropTypes.array
+    FavoriteMovies: PropTypes.array
   }),
   movies: PropTypes.array.isRequired
 };

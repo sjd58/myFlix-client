@@ -8,43 +8,18 @@ import { setMovies, setUser } from '../../actions/actions';
 
 import "./movie-view.scss";
 
-export class MovieView extends React.Component {
+class MovieView extends React.Component {
   constructor(props) {
     super(props);
     this.state= {
-      FavoriteMovies: [],
-      userDetails: []
+      Username: props.user.Username,
+      Password: props.user.Password,
+      Email: props.user.Email,
+      Birthday: props.user.Birthday,
+      FavoriteMovies: props.user.FavoriteMovies
     }
-
-    //this.getUserDetails = this.getUserDetails.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
   };
-
-  //componentDidMount() {
-    //const accessToken = localStorage.getItem('token');
-    //this.getUserDetails(accessToken);
-  //};
-  
-  //getUserDetails() {
-  //  const Username = localStorage.getItem('user');
-  //  const token = localStorage.getItem('token');
-  //  axios.get(`https://myflixapi-by-sjd58.herokuapp.com/users/${Username}`, 
-  //  {
-  //    headers: { Authorization: `Bearer ${token}`}
-  //  }
-  //)
-  //.then((response) => {
-  //  console.log(response.data);
-  //    this.props.setUser(response.user);
-
-  //    this.setState({
-  //      userDetails: response.data,
-  //      FavoriteMovies: response.data.FavoriteMovies
-  //    });
-  //  }).catch(function(error) {
-  //    console.log(error);
-  //  });
-  //};
 
   addFavorite = (e, movie) => {
     e.preventDefault();
@@ -58,9 +33,14 @@ export class MovieView extends React.Component {
       }
     )
     .then((response) => {
-      console.log(response);
+      this.props.setUser({
+        Username: response.data.Username,
+        Password: response.data.Password,
+        Email: response.data.Email,
+        Birthday: response.data.Birthday,
+        FavoriteMovies: response.data.FavoriteMovies
+      });
       alert("Favorite has been added!");
-      //this.componentDidMount();
     })
     .catch(function (error) {
       console.log(error);
@@ -72,7 +52,6 @@ export class MovieView extends React.Component {
 
     return (
       <Container>
-        {console.log(this.props)}
         <Row>
           <Col>
             <Card id="movie-view">
@@ -108,21 +87,31 @@ let mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {setUser})(MovieView);
+export const WrappedMovieView = connect(mapStateToProps, { setMovies, setUser }) (MovieView)
 
 MovieView.propTypes = {
-  movies: PropTypes.shape({
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    Genre: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired
-    }),
-    Director: PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Bio: PropTypes.string.isRequired,
-      Birth: PropTypes.string.isRequired
-    }),
-    ImagePath: PropTypes.string.isRequired
-  }).isRequired
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      Title: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired,
+      ImagePath: PropTypes.string.isRequired,
+      Genre: PropTypes.shape({
+        Name: PropTypes.string.isRequired,
+        Description: PropTypes.string.isRequired,
+      }).isRequired,
+      Director: PropTypes.shape({
+        Bio: PropTypes.string.isRequired,
+        Birth: PropTypes.string.isRequired,
+        Death: PropTypes.string.isRequired,
+        Name: PropTypes.string.isRequired,
+      }).isRequired,
+    })
+    ).isRequired,
+  user: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.array
+  }),
+  movies: PropTypes.array.isRequired
 };

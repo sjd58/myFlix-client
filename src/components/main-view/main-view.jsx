@@ -4,10 +4,10 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
-import { MovieView } from '../movie-view/movie-view';
+import { WrappedMovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
-import { ProfileView } from '../profile-view/profile-view';
+import { WrappedProfile } from '../profile-view/profile-view';
 import { NavbarView } from '../navbar-view/navbar-view';
 import {Col, Row } from "react-bootstrap";
 import "./main-view.scss";
@@ -118,7 +118,7 @@ onLoggedOut() {
             </Col>
             if (movies.length === 0) return <div className="main-view" />;
             return <Col md={8}>
-              <MovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
+              <WrappedMovieView movie={movies.find(m => m._id === match.params.movieId)} onBackClick={() => history.goBack()} />
             </Col>
           }} />
           <Route exact path="/directors/:name" render={({ match, history }) => {
@@ -153,7 +153,7 @@ onLoggedOut() {
                 <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
               </Col>
               return <Col md={8}>
-                <ProfileView movies={movies} onBackClick={() => history.goBack()} />
+                <WrappedProfile movies={movies} onBackClick={() => history.goBack()} />
               </Col>
           }
           } />
