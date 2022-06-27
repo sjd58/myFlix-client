@@ -59,7 +59,6 @@ componentDidMount() {
 // When a user successfully logs in, this function updates the 'user' property in state to that *particular user
 
   onLoggedIn(authData) {
-    console.log(authData);
     this.props.setUser(authData.user);
 
     localStorage.setItem('token', authData.token);
@@ -85,7 +84,6 @@ onLoggedOut() {
   render() {
     let { movies } = this.props;
     let { user } = this.props;
-    console.log(this.props)
     
     return (
       <Router>

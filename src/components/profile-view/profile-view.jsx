@@ -46,7 +46,6 @@ class ProfileView extends React.Component {
     }
   )
   .then((response) => {
-    console.log(response);
     this.props.setUser({
       Username: response.data.Username,
       Password: response.data.Password,
@@ -63,7 +62,6 @@ class ProfileView extends React.Component {
 
   onRemoveFavorite = (e, movie) => {
     e.preventDefault();
-    console.log('removing from favorites...')
     const Username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
@@ -73,7 +71,6 @@ class ProfileView extends React.Component {
       }
     )
     .then((response) => {
-      console.log(response);
       alert("Movie removed");
       this.props.setUser({
         Username: response.data.Username,
@@ -98,7 +95,6 @@ class ProfileView extends React.Component {
       }
     )
     .then((response) => {
-      console.log(response);
       alert("Profile Deleted");
       localStorage.removeItem('user');
       localStorage.removeItem('token');
