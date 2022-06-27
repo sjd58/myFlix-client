@@ -1,4 +1,81 @@
-.my-flix {
-  color: steelblue;
+* {
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+
+#card-footer {
+  background-color: slategray;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+* {
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+
+#main-view {
+  margin-top: 100px;
+}
+
+#card-footer {
+  background-color: slategray;
+}
+* {
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+
+#main-view {
+  margin-top: 100px;
+}
+#card-footer {
+  background-color: slategray;
+}
+#navbar {
+  background-color: black;
+  color: #ffffff;
+}
+
+#navbar-container {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+
+#navbar-brand {
+  background-color: black;
+  color: #ffffff;
+}
+
+#nav-link {
+  background-color: black;
+  color: #ffffff;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
+  color: #ffffff;
+}
+
+.main-view {
+  margin-top: 60px;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #1e1c36;
+  color: #ffffff;
 }
 /*# sourceMappingURL=index.caa67093.css.map */

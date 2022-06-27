@@ -1,0 +1,13 @@
+$backgroundColor: #1e1c36;
+$textColor: #ffffff;
+
+* {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: $backgroundColor;
+    color: $textColor;
+}
+
+#card-footer {
+    background-color: slategray;
+}

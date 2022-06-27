@@ -1,0 +1,25 @@
+$backgroundColor: #1e1c36;
+$textColor: #ffffff;
+$navbarColor: black;
+
+#navbar {
+    background-color: $navbarColor;
+    color: $textColor;
+}
+
+#navbar-container {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: $backgroundColor;
+    color: $textColor;
+}
+
+#navbar-brand {
+    background-color: $navbarColor;
+    color: $textColor;
+}
+
+#nav-link {
+    background-color: $navbarColor;
+    color: $textColor;
+}
